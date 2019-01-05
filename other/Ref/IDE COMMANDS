@@ -1,0 +1,228 @@
+As shown above, each command has four fields:
+
+Command – the actual command to be executed on the page.
+Target – element on the page.
+Value – Value to be used in case of commands like typeText etc.
+Comment – To provide extra information regarding the command used.
+3. Commands in Action
+Selenium commands can be generally classified as Actions, Accessors and Assertions. Actions generally involve commands interacting with the page and execute an action on the page. Accessors are used to store values in our environment and generally do not interact with the page. Assertions are generally used to verify matching conditions and generally act as the control points of our tests.
+
+We will look at each of the commands individually and then finally see a full example utilizing the commands.
+
+3.1 Open
+Open is used to open subdomain of the page. For example, Under google.com if you need to open images, we would provide google.com as the base playback url while /images will be provided as the target. It can also be provided a fresh absolute url to open a webpage in the current tab. But predominantly the former case will be used as base playback url will be the homepage of the application.
+
+1
+Command - Open
+2
+ Target - /images (or) http://www.google.com/images
+3
+ Value -
+3.2 Click/Clickat
+Click is the most frequently used command. It is used to click on a button or link which will trigger the associated action. Click is used to simulate the user click on the page. Click is provided with a css locator to identify the element to be clicked. Clickat takes not only the locator but also the position x,y in case the element is not uniquely identifiable via either its id or css locator.
+
+1
+Command - Click
+2
+ Target - id=logo
+3
+ Value -
+3.3 Send Keys
+This command is used to simulate a keypress event. We can pass events like enter using this command on the specified element or on global level like esc.
+
+1
+Command - send keys
+2
+Target - id=lst-ib
+3
+Value - ${KEY_ENTER}
+3.4 highlight
+This command is used to highlight a particular element or area of the page. Here we have specified id selector as the target.
+
+1
+Command - highlight
+2
+ Target - id=lst-ib
+3
+ Value -
+3.5 store/echo
+These commands are generally used in conjunction with each other. store is used to store a value into a particular variable, while echo is used to print the value of the particular variable.
+
+1
+Command - store
+2
+Target - hello
+3
+Value - var1
+Stores the value hello into variable var1
+
+1
+Command - echo
+2
+Target - ${var1)
+3
+Value -
+Prints the value of var1 in console. By using store title we can store the title of the page in the variable.
+
+1
+Command - store title
+2
+Target -
+3
+Value - var1
+The above command on google.com homepage stores the title google into variable var1.
+
+3.6 verify title/assert title
+This command is used to verify the title of the page. This is similar to assert Title except that the latter stops the execution if the assertion fails. This is the general differentiation between verify and assert. Both try to match the condition but verify logs the failure and continues execution while assert stops the execution.
+
+1
+Command - verify title
+2
+Target - Google
+3
+Value -
+The above command on google.com checks if the title is Google and passes the test. On other domains, it will fail but still rest of the commands in the test will pass.
+
+3.7 verify text/assert text
+This command is used to verify the presence of text in the target field specified.
+
+1
+Command - verify text
+2
+Target - id=slcvcob
+3
+Value - Google
+The above command checks if the text Google is present in the element matching the specified selector i.e a element with id as slcvob.
+
+3.8 verify element present
+This command is used to verify the presence of element in the page. This tries to find an element matching the specified selector.
+
+1
+Command - verify element present
+2
+Target - //input[@value='Google Search']
+3
+Value -
+This checks if an input control with value Google Search is displayed on the google.com page.
+
+3.9 pause
+This command is used to delay the execution by a specified amount of time. This is useful when we know that particular action executes after a certain amount of interval.
+
+1
+Command - pause
+2
+Target -
+3
+Value - 200
+The above example delays the execution of next command by 200 ms.
+
+3.10 choose ok on next confirmation
+This command is used to confirm the selection by pressing ok on confirmation prompts/alerts. This has been discontinued in latest selenium webdriver in favour of handle alert but selenium ide still supports it.
+
+1
+Command - choose ok on next confirmation
+2
+Target -
+3
+Value -
+Its counterpart is choose cancel on next confirmation which is equivalent to pressing cancel in the confirmation prompt.
+
+3.11 Select
+This command is used to select a value from the drop down.
+
+1
+Command - select
+2
+Target - id=select
+3
+Value - one
+This command selects the value one from a dropdown whose id is select.
+
+3.12 add selection
+This command is used to select a value from the drop down much similar to Select Command.
+
+1
+Command -add selection
+2
+Target - id=select
+3
+Value - two
+This command selects the value one from a dropdown whose id is select. This is useful in case of multi-select. Select selects only 1 value where as this is used to select multiple values from the multi-select box.
+
+3.13 remove selection
+This command is used to remove a selected value from the drop down.
+
+1
+Command -remove selection
+2
+Target - id=select
+3
+Value - two
+This command de-selects the value one from a dropdown whose id is select. This is very useful in case of multi-select.
+
+3.14 assert alert
+This command is used to verify if an alert window appears with the specified text. If not found, rest of the execution is stopped.
+
+1
+Command - assert alert
+2
+Target - Alert
+3
+Value -
+This checks if an alert box appears with the text Alert in the current window.
+
+3.15 assert editable
+This command is used on input fields such as text box, list box, drop downs etc. This checks if a particular element is editable or not. If element is not editable, rest of the execution is stopped.
+
+1
+Command - assert editable
+2
+Target - id=lst-ib
+3
+Value -
+The above command on google.com site executes successfully as the google search box is editable.
+
+3.16 assert not editable
+This command is inverse of the previous command. This checks if a particular element is un editable or not.
+
+1
+Command - assert not editable
+2
+Target - id=lst-ib
+3
+Value -
+The above command on google.com site fails as the google search box is editable.
+
+3.17 assert element present
+This command checks if a particular element is present in the current page or not. As with any assert command, on failure it stops execution.
+
+1
+Command - assert element present
+2
+Target - id=lst-ib
+3
+Value -
+The above command on google.com site passes as google search box is present in page. The inverse of this command is assert element not present.
+
+3.18 check
+This command checks if a particular element is present in the current page or not. As with any assert command, on failure it stops execution.
+
+1
+Command - check
+2
+Target - id=check1
+3
+Value -
+The above command checks the check box check1 present in the page. The inverse of this command is uncheck.
+
+3.19 mouse over
+This command checks if a particular element is present in the current page or not. As with any assert command, on failure it stops execution.
+
+1
+Command - mouse over
+2
+Target - css=input[value='Google Search']
+3
+Value -
+The above command simulates mouse over on  Google Search in google.com website.
+

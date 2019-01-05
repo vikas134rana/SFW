@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Test TextFinder</title>
+   </head>
+   <body>
+      
+      <input type="button" name="email1" value="Email" onclick="myFunction(this);">
+      <input type="button" name="pass1" value="Passowrd" onclick="myFunction(this);" >
+      <input type="button" name="login1" value="Log In" onclick="myFunction(this);">
+      
+      <frame name="frame1" >
+      	<button name="email2" onclick="myFunction(this);">Email</button>
+      	<button name="pass2" onclick="myFunction(this);"> Passowrd</button>
+      </frame>
+      
+      <frame name="frame2">
+      	<button name="email3" onclick="myFunction(this);"> Email</button>
+      	<button name="pass3" onclick="myFunction(this);"> Passowrd</button>
+      	<button name="login2" onclick="myFunction(this);" > Log In</button>
+      
+      	<frame name="frame2a">
+      		<input type="button" name="email4" value="Email" onclick="myFunction(this);">
+     		<input type="button" name="pass4" value="Passowrd" onclick="myFunction(this);">
+     		<input type="button" name="login3" value="Log In" onclick="myFunction(this);">
+      	</frame>
+      
+      </frame>
+      
+      <button name="emailLast" onclick="myFunction(this);">Email</button>
+      <button name="passLast" onclick="myFunction(this);">Passowrd</button>
+      <button name="loginLast" onclick="myFunction(this);">Log In</button>	
+   
+   		<br>
+   		<br>
+
+      <p id="banner"></p>
+
+      <script type="text/javascript">
+      	
+      	function myFunction(text) {
+  			document.getElementById("banner").innerHTML = text.name;
+		}
+
+      </script>
+
+   </body>
+</html>

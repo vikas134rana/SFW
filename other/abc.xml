@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Object>
+    <ObjectProperty>
+        <ObjectPropertyName>id</ObjectPropertyName>
+        <ObjectPropertyIsRegex>false</ObjectPropertyIsRegex>
+        <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+        <ObjectPropertyValue>login_button</ObjectPropertyValue>
+    </ObjectProperty>
+    <ObjectProperty>
+        <ObjectPropertyName>class</ObjectPropertyName>
+        <ObjectPropertyIsRegex>false</ObjectPropertyIsRegex>
+        <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+        <ObjectPropertyValue>login_class</ObjectPropertyValue>
+    </ObjectProperty>
+    <ObjectProperty>
+        <ObjectPropertyName>xpath</ObjectPropertyName>
+        <ObjectPropertyIsRegex>false</ObjectPropertyIsRegex>
+        <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+        <ObjectPropertyValue>//*[@id='login_button']</ObjectPropertyValue>
+    </ObjectProperty>
+</Object>

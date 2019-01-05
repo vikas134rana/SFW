@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Test TextFinder</title>
+   </head>
+   <body>
+      
+      <input type="button" name="email1" value="Email" onclick="myFunction(this);">
+      <input type="button" name="pass1" value="Password" onclick="myFunction(this);" >
+      <input type="button" name="login1" value="Log In" onclick="myFunction(this);">
+      
+      <iframe name="frame1" src="frame1.html" ></iframe>
+      
+      <iframe name="frame2" src="frame2.html"></iframe>
+      
+     <!--  <button name="emailLast" onclick="myFunction(this);">Email</button>
+      <button name="passLast" onclick="myFunction(this);">Passowrd</button>
+      <button name="loginLast" onclick="myFunction(this);">Log In</button>	 -->
+   
+   		<br>
+   		<br>
+
+      <p id="banner"></p>
+
+      <script type="text/javascript">
+      	
+      	function myFunction(text) {
+  			document.getElementById("banner").innerHTML = text.name;
+		}
+
+      </script>
+
+   </body>
+</html>

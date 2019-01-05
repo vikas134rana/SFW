@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Object >
+ 
+  <ObjectProperty>
+    <ObjectPropertyName>id</ObjectPropertyName>
+    <ObjectPropertyValue>login_button</ObjectPropertyValue>
+    <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+    <ObjectPropertyIsUsed>false</ObjectPropertyIsUsed>
+  </ObjectProperty>
+
+  <ObjectProperty>
+    <ObjectPropertyName>name</ObjectPropertyName>
+    <ObjectPropertyValue>login_name</ObjectPropertyValue>
+    <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+    <ObjectPropertyIsUsed>false</ObjectPropertyIsUsed>
+  </ObjectProperty>
+
+  <ObjectProperty>
+    <ObjectPropertyName>text</ObjectPropertyName>
+    <ObjectPropertyValue>Login</ObjectPropertyValue>
+    <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+    <ObjectPropertyIsUsed>false</ObjectPropertyIsUsed>
+  </ObjectProperty>
+
+  <ObjectProperty>
+    <ObjectPropertyName>class</ObjectPropertyName>
+    <ObjectPropertyValue>login_class</ObjectPropertyValue>
+    <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+    <ObjectPropertyIsUsed>false</ObjectPropertyIsUsed>
+  </ObjectProperty>
+
+  <ObjectProperty>
+    <ObjectPropertyName>xpath</ObjectPropertyName>
+    <ObjectPropertyValue>//input[@type='button' and text()='Login']</ObjectPropertyValue>
+    <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+    <ObjectPropertyIsUsed>false</ObjectPropertyIsUsed>
+  </ObjectProperty>
+
+  <ObjectProperty> 
+    <ObjectPropertyName>xpath</ObjectPropertyName>
+    <ObjectPropertyValue>input[type='button'][class='login_name']</ObjectPropertyValue>
+    <ObjectPropertyIsUsed>true</ObjectPropertyIsUsed>
+    <ObjectPropertyIsUsed>false</ObjectPropertyIsUsed>
+  </ObjectProperty>
+
+</Object>
