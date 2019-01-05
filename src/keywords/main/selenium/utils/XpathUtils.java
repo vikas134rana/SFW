@@ -71,6 +71,10 @@ public class XpathUtils {
 
 	/*- ************************************************************************************* */
 
+	public static String anyAttrXpath_CI(String xttrName, String attrValue,boolean contains) {
+		return contains==true? cAnyAttrXpath_CI(xttrName, attrValue):anyAttrXpath_CI(xttrName, attrValue);
+	}
+	
 	public static String cAnyAttrXpath_CI(String xttrName, String attrValue) {
 		return "contains(translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') , " + Quotes.escape(attrValue.toLowerCase())
 				+ ")";
@@ -78,6 +82,10 @@ public class XpathUtils {
 
 	public static String anyAttrXpath_CI(String xttrName, String attrValue) {
 		return "translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = " + Quotes.escape(attrValue.toLowerCase());
+	}
+	
+	public static String anyAttrXpath_NS_CI(String xttrName, String attrValue,boolean contains) {
+		return contains==true? cAnyAttrXpath_NS_CI(xttrName, attrValue):anyAttrXpath_NS_CI(xttrName, attrValue);
 	}
 
 	public static String cAnyAttrXpath_NS_CI(String xttrName, String attrValue) {
@@ -88,6 +96,10 @@ public class XpathUtils {
 	public static String anyAttrXpath_NS_CI(String xttrName, String attrValue) {
 		return "normalize-space(translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) = "
 				+ Quotes.escape(attrValue.toLowerCase());
+	}
+	
+	public static String anyAttrXpath_NS_CI_NBSP(String xttrName, String attrValue,boolean contains) {
+		return contains==true? cAnyAttrXpath_NS_CI_NBSP(xttrName, attrValue):anyAttrXpath_NS_CI_NBSP(xttrName, attrValue);
 	}
 	
 	public static String cAnyAttrXpath_NS_CI_NBSP(String xttrName, String attrValue) {

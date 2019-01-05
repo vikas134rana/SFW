@@ -288,7 +288,7 @@ public class TextFinder {
 		WebElement componentEle = null;
 
 		/*- if textEle is found using placeholder and keyword is Type then it is our action Ele
-		 *  return this. no need to go further */
+		 *  Return this. no need to go further */
 		if (webControls == WebControls.TYPABLE && WebEleUtils.isTypable(textEle)) {
 			componentEle = textEle;
 		} else {
@@ -296,22 +296,16 @@ public class TextFinder {
 			System.out.println("Find ActionEle (isTypable) TIME : <" + (System.currentTimeMillis() - start) + ">");
 
 			/*- Check if textEle have any textNode or child element */
-			// BUG (On Salesforce this line taking 2 sec). Dont know what the bug is. On
-			// other site working fine.
+			/*- BUG (On Salesforce this line (finding element using other element) taking 2 sec). Dont know why. But on other sites working fine. */
 			boolean useTextXpath = FinderUtils.findElement(textEle, ".//*[self::text() or self::*]") == null ? false : true;
 
 			System.out.println("Find ActionEle (useTextNodeXpath) TIME : <" + (System.currentTimeMillis() - start) + ">");
 
-			String textXpath = "";
 			String textNodeXpath = "";
 
 			if (useTextXpath) {
 
-				if (isPartial)
-					textXpath = XpathUtils.cAnyAttrXpath_NS_CI_NBSP(".", textToSearch);
-				else
-					textXpath = XpathUtils.anyAttrXpath_NS_CI_NBSP(".", textToSearch);
-
+				String textXpath = XpathUtils.anyAttrXpath_NS_CI_NBSP(".", textToSearch, isPartial);
 				textNodeXpath = "//text()[" + textXpath + "]";
 			}
 
