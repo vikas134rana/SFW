@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 import keywords.core.Driver;
@@ -19,6 +20,7 @@ public class FinderUtils {
 
 	private static final String ELE_MSG = "Found ELE : ";
 	private static final String ELES_MSG = "Found ELES : ";
+	private static final String BASE_ELE_NULL = "BaseEle is null";
 
 	/*- *****************************  findElement  ********************************* */
 
@@ -31,9 +33,7 @@ public class FinderUtils {
 
 		ele = null;
 		try {
-			long start = System.currentTimeMillis();
 			ele = Driver.getDriver().findElement(By.xpath(xpath));
-			System.out.println("Time Using Driver <" + (System.currentTimeMillis() - start) + ">");
 		} catch (Exception e) {
 		}
 		Log.debug(ELE_MSG + ele);
@@ -50,9 +50,9 @@ public class FinderUtils {
 
 		ele = null;
 		try {
-			long start = System.currentTimeMillis();
 			ele = baseEle.findElement(By.xpath(xpath));
-			System.out.println("Time Using BaseEle <" + (System.currentTimeMillis() - start) + ">");
+		} catch (StaleElementReferenceException e) {
+			Log.debug(e.getLocalizedMessage());
 		} catch (Exception e) {
 		}
 		Log.debug(ELE_MSG + ele);
@@ -96,6 +96,11 @@ public class FinderUtils {
 
 		ele = null;
 
+		if (baseEle == null) {
+			Log.debug(BASE_ELE_NULL);
+			return ele;
+		}
+		
 		long startTime = System.currentTimeMillis();
 		Log.debug("timeoutInMillis : " + timeoutInMillis);
 
@@ -134,8 +139,12 @@ public class FinderUtils {
 	 */
 	public static List<WebElement> findElements(WebElement baseEle, String xpath) {
 
+		eles.clear();
+
 		try {
 			eles = baseEle.findElements(By.xpath(xpath));
+		} catch (StaleElementReferenceException e) {
+			Log.debug(e.getLocalizedMessage());
 		} catch (Exception e) {
 		}
 		Log.debug(ELES_MSG + eles);
@@ -178,6 +187,11 @@ public class FinderUtils {
 	public static List<WebElement> findElements(WebElement baseEle, String xpath, int timeoutInMillis) {
 
 		eles.clear();
+
+		if (baseEle == null) {
+			Log.debug(BASE_ELE_NULL);
+			return eles;
+		}
 
 		long startTime = System.currentTimeMillis();
 		Log.debug("timeoutInMillis : " + timeoutInMillis);
