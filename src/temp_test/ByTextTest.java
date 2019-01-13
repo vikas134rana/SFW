@@ -6,6 +6,8 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import core.TextObject;
+import core.WebObjectProperty;
 import keywords.core.Driver;
 import keywords.main.Utility;
 import keywords.main.WebKW;
@@ -17,7 +19,30 @@ public class ByTextTest {
 
 	public static void main(String[] args) {
 
-		byTextBeforeAfterTest();
+		byTextTest();
+	}
+
+	static void byTextUsingObject() {
+
+		WebKW.openBrowser("chrome", "http://www.asuspromo.in/");
+
+		TextObject object = new TextObject();
+		object.setTextToSearch(new WebObjectProperty("texttosearch", "REGISTER"));
+		WebKW.clickByText(object);
+
+		Utility.waitUntil(1000);
+
+		object = new TextObject();
+		object.setTextToSearch(new WebObjectProperty("texttosearch", "STATE "));
+		WebKW.selectDropdownByText(object, false, "Delhi");
+
+		object = new TextObject();
+		object.setTextToSearch(new WebObjectProperty("texttosearch", "MODEL NO"));
+		WebKW.typeByText(object, false, "X510UF-EJ592T");
+
+		object = new TextObject();
+		object.setTextToSearch(new WebObjectProperty("texttosearch", "SERIAL NUMBER"));
+		WebKW.typeByText(object, false, "JAN0CX01C40941B");
 	}
 
 	static void faltuTest() {
@@ -48,8 +73,7 @@ public class ByTextTest {
 		TextKeywords.clickByText("SUBMIT", 0, false, null, null);
 		TextKeywords.clickByText("Select", 0, false, null, null);
 		TextKeywords.selectDropdownByText("HOW DID YOU KNOW ABOUT THE PRODUCT?", 0, false, null, null, false, "Google");
-		TextKeywords.selectDropdownByText("WHERE DID YOU BUY THE PRODUCT?", 0, false, null, null, false,
-				"ASUS EXCLUSIVE STORE");
+		TextKeywords.selectDropdownByText("WHERE DID YOU BUY THE PRODUCT?", 0, false, null, null, false, "ASUS EXCLUSIVE STORE");
 		TextKeywords.typeByText("STORE NAME", 0, false, "", "", false, "LAPCOM PERIPHERALS");
 		TextKeywords.typeByText("PURCHASE PRICE", 0, false, "", "", false, "50000");
 
@@ -122,8 +146,7 @@ public class ByTextTest {
 	static void textMethodTest() {
 		WebKW.openBrowser("chrome", "http://toolsqa.com/automation-practice-form/");
 
-		List<WebElement> eles = Driver.getDriver().findElements(
-				By.xpath("//*[@id='content']/div[1]/div/div/div/div[2]/div/form/fieldset/div[20]//text()"));
+		List<WebElement> eles = Driver.getDriver().findElements(By.xpath("//*[@id='content']/div[1]/div/div/div/div[2]/div/form/fieldset/div[20]//text()"));
 
 		for (WebElement ele : eles) {
 			System.out.println("TAG : " + ele.getTagName());

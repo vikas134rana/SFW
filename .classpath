@@ -43,5 +43,6 @@
 	<classpathentry kind="lib" path="lib/selenium-java-3.141.5/selenium-safari-driver-3.141.5.jar"/>
 	<classpathentry kind="lib" path="lib/selenium-java-3.141.5/selenium-support-3.141.5.jar"/>
 	<classpathentry kind="lib" path="lib/other/selenium-shutterbug-0.9.jar"/>
+	<classpathentry kind="lib" path="lib/apache/commons-beanutils-1.9.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
