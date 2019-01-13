@@ -36,8 +36,7 @@ public class WindowMap {
 	/**
 	 * 
 	 * @param map
-	 * @param title
-	 *            - title (without Time)
+	 * @param title - title (without Time)
 	 * @return - all window handles that have specified title
 	 */
 	public static List<String> getHandles(Map<String, String> map, String title) {
@@ -78,11 +77,9 @@ public class WindowMap {
 		String currentWindowHandle = Window.getWindowHandle();
 		List<String> windowHandles = Window.getWindowHandles();
 
-		List<String> toBeAddedInOpenedHandles = CollectionUtils.subtract(windowHandles, openedWindowsHandleAndTitleMap.keySet()).stream()
-				.collect(Collectors.toList());
+		List<String> toBeAddedInOpenedHandles = new ArrayList<>(CollectionUtils.subtract(windowHandles, openedWindowsHandleAndTitleMap.keySet()));
 
-		List<String> toBeRemovedFromOpenedHandles = CollectionUtils.subtract(openedWindowsHandleAndTitleMap.keySet(), windowHandles).stream()
-				.collect(Collectors.toList());
+		List<String> toBeRemovedFromOpenedHandles = new ArrayList<>(CollectionUtils.subtract(openedWindowsHandleAndTitleMap.keySet(), windowHandles));
 
 		/*- remove old window handles from map */
 		for (String handle : toBeRemovedFromOpenedHandles) {

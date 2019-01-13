@@ -47,7 +47,7 @@ public class Window {
 		WebObjectProperty metaTitleProp = WebObjectUtils.getWindowTitleProp(object);
 		WebObjectProperty metaTitleIndexProp = WebObjectUtils.getWindowTitleIndexProp(object);
 
-		if (metaTitleProp == null || !metaTitleProp.isUsableIgnoringEmptyValue())
+		if (metaTitleProp == null || !metaTitleProp.isUsableWithEmptyValue())
 			return false;
 
 		String objectWindowTitle = metaTitleProp.getValue();

@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 
 import core.Keyword;
 import core.Keyword.KeywordRB;
+import core.TextObject;
 import core.WebObject;
 import keywords.core.Driver;
 import keywords.core.Finder;
@@ -13,6 +14,7 @@ import keywords.main.selenium.Alert;
 import keywords.main.selenium.Browser;
 import keywords.main.selenium.Element;
 import keywords.main.selenium.SpecialActions;
+import keywords.main.selenium.TextKeywords;
 
 public class WebKW {
 
@@ -77,16 +79,48 @@ public class WebKW {
 		return KeywordRB.PASS().setOutput(true).setMessage(Message.DONE.toString()).build();
 	}
 
-	public static void main(String[] args) {
+	/*- ========================================= By_Text ================================================== */
+	
+	public static Keyword clickByText(TextObject object) {
 
-		// Keyword keywordResult = click();
+		TextKeywords.clickByText(object);
 
-		// System.out.println(keywordResult);
-
-		/*-System.out.println("Status : "+keywordResult.getStatus());
-		System.out.println("Output : "+keywordResult.getOutput());
-		System.out.println("Message : "+keywordResult.getMessage());
-		System.out.println("ScreenshotPath : "+keywordResult.getScreenshotPath());*/
-
+		return KeywordRB.PASS().setOutput(true).setMessage(Message.DONE.toString()).build();
 	}
+	
+	public static Keyword typeByText(TextObject object,boolean before, String textToType) {
+
+		TextKeywords.typeByText(object, before, textToType);
+
+		return KeywordRB.PASS().setOutput(true).setMessage(Message.DONE.toString()).build();
+	}
+	
+	public static Keyword selectDropdownByText(TextObject object,boolean before, String textToSelect) {
+
+		TextKeywords.selectDropdownByText(object, before, textToSelect);
+
+		return KeywordRB.PASS().setOutput(true).setMessage(Message.DONE.toString()).build();
+	}
+	
+	public static Keyword selectCheckboxByText(TextObject object,boolean before) {
+
+		TextKeywords.selectCheckboxByText(object, before);
+
+		return KeywordRB.PASS().setOutput(true).setMessage(Message.DONE.toString()).build();
+	}
+	
+	public static Keyword selectRadioButtonByText(TextObject object,boolean before) {
+
+		TextKeywords.selectRadioButtonByText(object, before);
+
+		return KeywordRB.PASS().setOutput(true).setMessage(Message.DONE.toString()).build();
+	}
+	
+	public static Keyword mouseHoverOnText(TextObject object) {
+
+		TextKeywords.mouseHoverOnText(object);
+
+		return KeywordRB.PASS().setOutput(true).setMessage(Message.DONE.toString()).build();
+	}
+	
 }
