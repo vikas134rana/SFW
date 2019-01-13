@@ -8,6 +8,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Quotes;
 
+import core.Data;
+import core.TextObject;
+import core.WebObjectProperty;
 import keywords.main.Utility;
 import keywords.main.selenium.utils.FinderUtils;
 import keywords.main.selenium.utils.VisibleUtils;
@@ -45,11 +48,25 @@ public class TextFinder {
 	}
 
 	public TextFinder(String textToSearch, int index, boolean isPartial, String beforeText, String afterText) {
-		this.textToSearch = textToSearch != null ? textToSearch.trim() : null;
+		this.textToSearch = StringUtils.trim(textToSearch);
 		this.index = index;
 		this.isPartial = isPartial;
-		this.beforeText = beforeText;
-		this.afterText = afterText;
+		this.beforeText = StringUtils.trim(beforeText);
+		this.afterText = StringUtils.trim(afterText);
+	}
+
+	public TextFinder(TextObject object) {
+		WebObjectProperty textToSearchProp = object.getTextToSearch();
+		WebObjectProperty indexProp = object.getIndex();
+		WebObjectProperty partialProp = object.getPartial();
+		WebObjectProperty beforeTextProp = object.getBeforeText();
+		WebObjectProperty afterTextProp = object.getAfterText();
+
+		this.textToSearch = StringUtils.trim(textToSearchProp.getValueIfUsable());
+		this.index = Data.getInt(indexProp.getValueIfUsable());
+		this.isPartial = Data.getBoolean(partialProp.getValueIfUsable());
+		this.beforeText = StringUtils.trim(beforeTextProp.getValueIfUsable());
+		this.afterText = StringUtils.trim(afterTextProp.getValueIfUsable());
 	}
 
 	// find visible elements inside whole page (in all frame)
@@ -215,43 +232,46 @@ public class TextFinder {
 	private String getTextXpath(Boolean before) {
 
 		String x;
-		String notScriptAndHidden = "not(self::script) and not(@type='hidden') ";
+		String notScriptHeadAndHidden = "not(self::script) and not(self::*[./ancestor::head]) and not(@type='hidden') ";
 
 		/*- ============================================================= CONTAINS =============================================================== */
 
-		String cText = XpathUtils.cTextXpath_NS_CI(textToSearch);
+		String cText = XpathUtils.cAttrXpath_NS_CI("text()",textToSearch);
 
-		String cButtonValue = XpathUtils.cAnyAttrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input[" + XpathUtils.propXpath_NS_CI("type", "button")
-				+ "]";
+		String cButtonValue = XpathUtils.cAttrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input["
+				+ XpathUtils.cAttrXpath_NS_CI_NBSP("@type", "button") + "]";
 
-		String cSubmitValue = XpathUtils.cAnyAttrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input[" + XpathUtils.propXpath_NS_CI("type", "submit")
-				+ "]";
+		String cSubmitValue = XpathUtils.cAttrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input["
+				+ XpathUtils.cAttrXpath_NS_CI_NBSP("@type", "submit") + "]";
 
-		String cTitle = XpathUtils.cAnyAttrXpath_NS_CI_NBSP("@title", textToSearch);
+		String cTitle = XpathUtils.cAttrXpath_NS_CI_NBSP("@title", textToSearch);
 
-		String cSpecialSpaceText = XpathUtils.cAnyAttrXpath_NS_CI_NBSP("text()", textToSearch);
+		String cSpecialSpaceText = XpathUtils.cAttrXpath_NS_CI_NBSP("text()", textToSearch);
 
-		String cPlaceholder = XpathUtils.cAnyAttrXpath_NS_CI_NBSP("@placeholder", textToSearch);
+		String cPlaceholder = XpathUtils.cAttrXpath_NS_CI_NBSP("@placeholder", textToSearch);
+
+		String cTextNodeXpath = "text()[" + XpathUtils.cAttrXpath_NS_CI_NBSP(".", textToSearch) + "]/parent::*[1]";
 
 		/*- =========================================================== NOT_CONTAINS ============================================================= */
 
-		String text = XpathUtils.textXpath_NS_CI(textToSearch) + " or text()=" + Quotes.escape(textToSearch);
+		String text = XpathUtils.attrXpath_NS_CI("text()",textToSearch) + " or text()=" + Quotes.escape(textToSearch);
 
-		String buttonValue = XpathUtils.anyAttrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input[" + XpathUtils.propXpath_NS_CI("type", "button")
-				+ "]";
+		String buttonValue = XpathUtils.attrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input["
+				+ XpathUtils.attrXpath_NS_CI_NBSP("@type", "button") + "]";
 
-		String submitValue = XpathUtils.anyAttrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input[" + XpathUtils.propXpath_NS_CI("type", "submit")
-				+ "]";
+		String submitValue = XpathUtils.attrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input["
+				+ XpathUtils.attrXpath_NS_CI_NBSP("@type", "submit") + "]";
 
-		String title = XpathUtils.anyAttrXpath_NS_CI_NBSP("@title", textToSearch);
+		String title = XpathUtils.attrXpath_NS_CI_NBSP("@title", textToSearch);
 
-		String specialSpaceText = XpathUtils.anyAttrXpath_NS_CI_NBSP("text()", textToSearch);
+		String specialSpaceText = XpathUtils.attrXpath_NS_CI_NBSP("text()", textToSearch);
 
-		String placeholder = XpathUtils.anyAttrXpath_NS_CI_NBSP("@placeholder", textToSearch);
+		String placeholder = XpathUtils.attrXpath_NS_CI_NBSP("@placeholder", textToSearch);
+
+		String textNodeXpath = "text()[" + XpathUtils.attrXpath_NS_CI_NBSP(".", textToSearch) + "]/parent::*[1]";
 
 		/*- =========================================================== ************ ============================================================= */
 
-		String textNodeXpath = "";
 		String xpathDirection = "//";
 
 		if (before != null)
@@ -259,16 +279,12 @@ public class TextFinder {
 
 		if (isPartial) {
 
-			textNodeXpath = xpathDirection + "text()[" + XpathUtils.cAnyAttrXpath_NS_CI_NBSP(".", textToSearch) + "]/parent::*[1]";
-
-			x = xpathDirection + "*[ " + notScriptAndHidden + " and (   (" + cText + ") or (" + cButtonValue + ") or (" + cSubmitValue + ") or (" + cTitle
-					+ ")  or (" + cSpecialSpaceText + ") or (" + cPlaceholder + ")  )]" + " | " + textNodeXpath;
+			x = xpathDirection + "*[ " + notScriptHeadAndHidden + " and (   (" + cText + ") or (" + cButtonValue + ") or (" + cSubmitValue + ") or (" + cTitle
+					+ ")  or (" + cSpecialSpaceText + ") or (" + cPlaceholder + ") or (" + cTextNodeXpath + ")  )]";
 		} else {
 
-			textNodeXpath = xpathDirection + "text()[" + XpathUtils.anyAttrXpath_NS_CI_NBSP(".", textToSearch) + "]/parent::*[1]";
-
-			x = xpathDirection + "*[ " + notScriptAndHidden + " and (   (" + text + ") or (" + buttonValue + ") or (" + submitValue + ") or (" + title
-					+ ")  or (" + specialSpaceText + ") or (" + placeholder + ") )]" + " | " + textNodeXpath;
+			x = xpathDirection + "*[ " + notScriptHeadAndHidden + " and (   (" + text + ") or (" + buttonValue + ") or (" + submitValue + ") or (" + title
+					+ ")  or (" + specialSpaceText + ") or (" + placeholder + ")  or (" + textNodeXpath + ")  )]";
 		}
 
 		System.out.println(x);
@@ -305,7 +321,7 @@ public class TextFinder {
 
 			if (useTextXpath) {
 
-				String textXpath = XpathUtils.anyAttrXpath_NS_CI_NBSP(".", textToSearch, isPartial);
+				String textXpath = XpathUtils.attrXpath_NS_CI_NBSP(".", textToSearch, isPartial);
 				textNodeXpath = "//text()[" + textXpath + "]";
 			}
 
