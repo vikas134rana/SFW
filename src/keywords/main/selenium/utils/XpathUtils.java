@@ -1,114 +1,98 @@
 package keywords.main.selenium.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.openqa.selenium.support.ui.Quotes;
 
 import keywords.core.WebControls;
 
+/*- 
+ * 1. NS 	- handled normalize-space 		(for eg in DOM ' FirstName ' and 'FirstName' is same )
+ * 			  Normalize-Space -> The normalize-space function strips leading and trailing white-space from a string,
+ * 			  replaces sequences of whitespace characters by a single space, and returns the resulting string.
+ * 			  SYNTAX -> normalize-space( [string] )		 
+ * 			  LINK -> https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/normalize-space
+ * 
+ * 2. CI 	- handled case insensitive		(for eg in DOM 'FirstName' and 'firstname' is same )
+ * 			  There is no direct case insensitive method in xpath. Using translate method to deal with this situation.
+ * 			  Translate -> The translate function evaluates a string and a set of characters to translate and returns the translated string.
+ * 			  SYNTAX -> translate(anyString ,abc ,XYZ )
+ * 						where in String 'anyString'  a is replace with X , b is replace with Y and so on.
+ * 						using translate we can achieve lowercase, uppercase etc 	
+ * 			  LINK -> https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/translate	
+ * 
+ * 
+ * 3. NBSP - handled non-breaking space	(for eg in DOM '&nbsp;FirstName' and ' FirstName' is same )
+ * 			 There is no direct NBSP method in xpath. Using translate method to deal with this situation.
+ * 			 SYNTAX -> translate(anyString ,'\u00a0' ,' ' )
+ * 						where in String 'anyString' '\u00a0'(nbsp space unicode in java) is replace with normal-space.
+ * 			 LINK -> https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/translate
+ */
+
+/*- 
+ *  HTML 		- attribute
+ *  JavaScript 	- property
+ * */
+
 public class XpathUtils {
 
-	// translate xpath property to lowercase
-	public static String propXpath_NS_CI(String attrName, String attrValue) {
-		return "normalize-space(translate(@" + attrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) = "
-				+ Quotes.escape(attrValue.toLowerCase()) + "";
+	/*- ************************************************************************************* */
+
+	// NS
+	public static String attrXpath_NS(String attrName, String attrValue, boolean contains) {
+		return contains == true ? attrXpath_NS(attrName, attrValue) : cAttrXpath_NS(attrName, attrValue);
 	}
 
-	// translate text xpath to lowercase
-	public static String cPropXpath_NS_CI(String attrName, String attrValue) {
-		return "contains(normalize-space(translate(@" + attrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) , "
-				+ Quotes.escape(attrValue.toLowerCase()) + ")";
+	public static String attrXpath_NS(String attrName, String attrValue) {
+		return "normalize-space(" + attrName + ") = " + Quotes.escape(attrValue.toLowerCase());
 	}
 
-	/*- handled space, case in text */
-	public static String textXpath_NS_CI(String text) {
-		return "normalize-space(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) = " + Quotes.escape(text.toLowerCase()) + "";
+	public static String cAttrXpath_NS(String attrName, String attrValue) {
+		return "contains(normalize-space(" + attrName + ") , " + Quotes.escape(attrValue.toLowerCase()) + ")";
 	}
 
-	/*- handled contains, space, case in text */
-	public static String cTextXpath_NS_CI(String text) {
-		return "contains(normalize-space(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) , " + Quotes.escape(text.toLowerCase())
+	// CI
+	public static String attrXpath_CI(String attrName, String attrValue, boolean contains) {
+		return contains == true ? cAttrXpath_CI(attrName, attrValue) : attrXpath_CI(attrName, attrValue);
+	}
+
+	public static String cAttrXpath_CI(String attrName, String attrValue) {
+		return "contains(translate(" + attrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') , " + Quotes.escape(attrValue.toLowerCase())
 				+ ")";
 	}
 
-	/*- ************************************************************************************* */
-
-	// translate xpath property to lowercase
-	public static String propXpath_NS_CS(String attrName, String attrValue) {
-		return "normalize-space(@" + attrName + ") = " + Quotes.escape(attrValue) + "";
+	public static String attrXpath_CI(String attrName, String attrValue) {
+		return "translate(" + attrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = " + Quotes.escape(attrValue.toLowerCase());
 	}
 
-	// translate text xpath to lowercase
-	public static String cPropXpath_NS_CS(String attrName, String attrValue) {
-		return "contains(normalize-space(@" + attrName + ") , " + Quotes.escape(attrValue) + ")";
+	// NS_CI
+	public static String attrXpath_NS_CI(String attrName, String attrValue, boolean contains) {
+		return contains == true ? cAttrXpath_NS_CI(attrName, attrValue) : attrXpath_NS_CI(attrName, attrValue);
 	}
 
-	/*- handled space, case in text */
-	public static String textXpath_NS_CS(String textValue) {
-		return "normalize-space(text()) = " + Quotes.escape(textValue) + "";
-	}
-
-	/*- handled contains, space, case in text */
-	public static String cTextXpath_NS_CS(String textValue) {
-		return "contains(normalize-space(text()) , " + Quotes.escape(textValue) + ")";
-	}
-
-	/*- ************************************************************************************* */
-
-	public static String cTextXpath_CI(String text) {
-		return "contains(translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') , " + Quotes.escape(text.toLowerCase()) + ")";
-	}
-
-	public static String textXpath_CI(String text) {
-		return "translate(text(),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = " + Quotes.escape(text.toLowerCase());
-	}
-
-	public static String cDotXpath_CI(String text) {
-		return "contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') , " + Quotes.escape(text.toLowerCase()) + ")";
-	}
-
-	public static String dotXpath_CI(String text) {
-		return "translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = " + Quotes.escape(text.toLowerCase());
-	}
-
-	/*- ************************************************************************************* */
-
-	public static String anyAttrXpath_CI(String xttrName, String attrValue,boolean contains) {
-		return contains==true? cAnyAttrXpath_CI(xttrName, attrValue):anyAttrXpath_CI(xttrName, attrValue);
-	}
-	
-	public static String cAnyAttrXpath_CI(String xttrName, String attrValue) {
-		return "contains(translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') , " + Quotes.escape(attrValue.toLowerCase())
-				+ ")";
-	}
-
-	public static String anyAttrXpath_CI(String xttrName, String attrValue) {
-		return "translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = " + Quotes.escape(attrValue.toLowerCase());
-	}
-	
-	public static String anyAttrXpath_NS_CI(String xttrName, String attrValue,boolean contains) {
-		return contains==true? cAnyAttrXpath_NS_CI(xttrName, attrValue):anyAttrXpath_NS_CI(xttrName, attrValue);
-	}
-
-	public static String cAnyAttrXpath_NS_CI(String xttrName, String attrValue) {
-		return "contains(normalize-space(translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) , "
+	public static String cAttrXpath_NS_CI(String attrName, String attrValue) {
+		return "contains(normalize-space(translate(" + attrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) , "
 				+ Quotes.escape(attrValue.toLowerCase()) + ")";
 	}
 
-	public static String anyAttrXpath_NS_CI(String xttrName, String attrValue) {
-		return "normalize-space(translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) = "
+	public static String attrXpath_NS_CI(String attrName, String attrValue) {
+		return "normalize-space(translate(" + attrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz')) = "
 				+ Quotes.escape(attrValue.toLowerCase());
 	}
-	
-	public static String anyAttrXpath_NS_CI_NBSP(String xttrName, String attrValue,boolean contains) {
-		return contains==true? cAnyAttrXpath_NS_CI_NBSP(xttrName, attrValue):anyAttrXpath_NS_CI_NBSP(xttrName, attrValue);
+
+	// NS_CI_NBSP
+	public static String attrXpath_NS_CI_NBSP(String attrName, String attrValue, boolean contains) {
+		return contains == true ? cAttrXpath_NS_CI_NBSP(attrName, attrValue) : attrXpath_NS_CI_NBSP(attrName, attrValue);
 	}
-	
-	public static String cAnyAttrXpath_NS_CI_NBSP(String xttrName, String attrValue) {
-		return "contains(normalize-space(translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00a0','abcdefghijklmnopqrstuvwxyz ')) , "
+
+	public static String cAttrXpath_NS_CI_NBSP(String attrName, String attrValue) {
+		return "contains(normalize-space(translate(" + attrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00a0','abcdefghijklmnopqrstuvwxyz ')) , "
 				+ Quotes.escape(attrValue.toLowerCase()) + ")";
 	}
-	
-	public static String anyAttrXpath_NS_CI_NBSP(String xttrName, String attrValue) {
-		return "normalize-space(translate(" + xttrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00a0','abcdefghijklmnopqrstuvwxyz ')) = "
+
+	public static String attrXpath_NS_CI_NBSP(String attrName, String attrValue) {
+		return "normalize-space(translate(" + attrName + ",'ABCDEFGHIJKLMNOPQRSTUVWXYZ\u00a0','abcdefghijklmnopqrstuvwxyz ')) = "
 				+ Quotes.escape(attrValue.toLowerCase());
 	}
 
