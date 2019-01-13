@@ -10,8 +10,16 @@ public class WebObjectProperty {
 	private String value;
 	private boolean isUsed;
 	private boolean isRegex;
+	private KeywordArgumentType dataType;
 
 	public WebObjectProperty() {
+	}
+
+	public WebObjectProperty(String name, String value) {
+		this.name = name;
+		this.value = value;
+		this.isUsed = true;
+		this.isRegex = false;
 	}
 
 	public WebObjectProperty(String name, String value, boolean isUsed, boolean isRegex) {
@@ -19,6 +27,14 @@ public class WebObjectProperty {
 		this.value = value;
 		this.isUsed = isUsed;
 		this.isRegex = isRegex;
+	}
+
+	public WebObjectProperty(String name, String value, boolean isUsed, boolean isRegex, KeywordArgumentType type) {
+		this.name = name;
+		this.value = value;
+		this.isUsed = isUsed;
+		this.isRegex = isRegex;
+		this.dataType = type;
 	}
 
 	@XmlElement(name = "ObjectPropertyName")
@@ -57,6 +73,14 @@ public class WebObjectProperty {
 		this.isRegex = isRegex;
 	}
 
+	public KeywordArgumentType getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(KeywordArgumentType dataType) {
+		this.dataType = dataType;
+	}
+
 	@Override
 	public String toString() {
 		return "[" + this.name + ", " + this.value + ", " + this.isUsed + " , " + this.isRegex + "] -> isUsable: " + isUsable();
@@ -74,9 +98,18 @@ public class WebObjectProperty {
 		return false;
 	}
 
-	public boolean isUsableIgnoringEmptyValue() {
+	public boolean isUsableWithEmptyValue() {
 		if (this != null && this.value != null && this.isUsed)
 			return true;
 		return false;
 	}
+
+	public String getValueIfUsable() {
+		return isUsable() == true ? this.value : null;
+	}
+
+	public String getValueIfUsableWithEmptyValue() {
+		return isUsable() == true ? this.value : null;
+	}
+
 }
