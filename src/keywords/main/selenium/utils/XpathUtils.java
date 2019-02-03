@@ -3,6 +3,7 @@ package keywords.main.selenium.utils;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jsoup.nodes.Node;
 import org.openqa.selenium.support.ui.Quotes;
 
 import keywords.core.WebControls;
@@ -98,14 +99,52 @@ public class XpathUtils {
 
 	/*- ************************************************************************************* */
 
-	public static String xpathDirection(boolean before) {
+	public static String createXpath(Node n) {
+		int index = 1;
+		String xpath = "";
+		while (!n.nodeName().equals("body")) {
+			index = elementIndex(n);
+			xpath = "/" + n.nodeName() + "[" + index + "]" + xpath;
+			n = n.parentNode();
+		}
+		return "//body" + xpath;
+	}
 
-		String xpathDirection = "";
+	public static int elementIndex(Node n) {
+		int index = 0;
+		String nodeName = n.nodeName();
+		while (n != null) {
+			if (n.nodeName().equals(nodeName)) {
+				index++;
+			}
+			n = n.previousSibling();
+		}
+		return index;
+	}
 
-		if (before)
-			xpathDirection = ".//preceding::";
-		else
-			xpathDirection = ".//following::";
+	/*- ************************************************************************************* */
+
+	/**
+	 * 1. Before = null -> (.//)
+	 * 
+	 * 2. Before = true -> (.//preceding::)
+	 * 
+	 * 3. Before = false -> (.//following::)
+	 * 
+	 * @param before
+	 * @return
+	 */
+	public static String xpathDirection(Boolean before) {
+
+		String xpathDirection = ".//";
+
+		if (before != null) {
+			if (before)
+				xpathDirection = ".//preceding::";
+			else
+				xpathDirection = ".//following::";
+		}
+
 		return xpathDirection;
 	}
 
@@ -129,7 +168,7 @@ public class XpathUtils {
 		return "input[@type='radio']";
 	}
 
-	public static String componentXpathWithDirection(boolean before, WebControls webControls) {
+	public static String componentXpathWithDirection(Boolean before, WebControls webControls) {
 
 		String componentXpath = "";
 
@@ -153,4 +192,5 @@ public class XpathUtils {
 
 		return XpathUtils.xpathDirection(before) + componentXpath;
 	}
+
 }
