@@ -19,7 +19,7 @@ public class ByTextTest {
 
 	public static void main(String[] args) {
 
-		byTextTest();
+		salesforceByText();
 	}
 
 	static void byTextUsingObject() {
@@ -179,13 +179,15 @@ public class ByTextTest {
 
 		/*- Login Credentials */
 		TextKeywords.typeByText("Username", 0, false, null, null, false, "srikant@xyz.com");
-		TextKeywords.typeByText("Password", 0, false, null, null, false, "Crestech8");
+		TextKeywords.typeByText("Password", 0, false, null, null, false, "Crestech7");
 		TextKeywords.clickByText("Log In", 0, false, null, null);
 
-		Utility.waitUntil(5000);
+		Utility.waitUntil(10000);
 
 		TextKeywords.clickByText("Close", 0, false, null, null);
 		TextKeywords.clickByText("New", 0, false, null, null);
+		Utility.waitUntil(2000);
+		TextKeywords.clickByText("Continue", 0, false, null, null);
 
 		/*- Account Information */
 

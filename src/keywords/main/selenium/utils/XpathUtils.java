@@ -1,8 +1,5 @@
 package keywords.main.selenium.utils;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.jsoup.nodes.Node;
 import org.openqa.selenium.support.ui.Quotes;
 

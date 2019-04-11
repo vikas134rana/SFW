@@ -13,6 +13,7 @@ import core.TextObject;
 import core.WebObjectProperty;
 import keywords.main.Utility;
 import keywords.main.selenium.utils.FinderUtils;
+import keywords.main.selenium.utils.UtilsJS;
 import keywords.main.selenium.utils.VisibleUtils;
 import keywords.main.selenium.utils.WebEleUtils;
 import keywords.main.selenium.utils.XpathUtils;
@@ -110,9 +111,12 @@ public class TextFinder {
 	}
 
 	private List<WebElement> findElesInCurrentDom() {
+		System.out.println("Finding Element in current DOM");
 		List<WebElement> eles = FinderUtils.findElements(getTextXpath());
+		System.out.println("Eles Size : " + eles.size());
 		List<WebElement> visibleEle = VisibleUtils.getInstance().getAllVisibleEles(eles);
 		eles = Utility.removeDuplicate(visibleEle);
+		System.out.println("Visible Eles Size : " + eles.size());
 
 		/*- TODO: Ignore Element - 
 		 * 1. like when placeholder Element is visible but placeholder is not visible
@@ -236,7 +240,7 @@ public class TextFinder {
 
 		/*- ============================================================= CONTAINS =============================================================== */
 
-		String cText = XpathUtils.cAttrXpath_NS_CI("text()",textToSearch);
+		String cText = XpathUtils.cAttrXpath_NS_CI("text()", textToSearch);
 
 		String cButtonValue = XpathUtils.cAttrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input["
 				+ XpathUtils.cAttrXpath_NS_CI_NBSP("@type", "button") + "]";
@@ -254,13 +258,13 @@ public class TextFinder {
 
 		/*- =========================================================== NOT_CONTAINS ============================================================= */
 
-		String text = XpathUtils.attrXpath_NS_CI("text()",textToSearch) + " or text()=" + Quotes.escape(textToSearch);
+		String text = XpathUtils.attrXpath_NS_CI("text()", textToSearch) + " or text()=" + Quotes.escape(textToSearch);
 
-		String buttonValue = XpathUtils.attrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input["
-				+ XpathUtils.attrXpath_NS_CI_NBSP("@type", "button") + "]";
+		String buttonValue = XpathUtils.attrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input[" + XpathUtils.attrXpath_NS_CI_NBSP("@type", "button")
+				+ "]";
 
-		String submitValue = XpathUtils.attrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input["
-				+ XpathUtils.attrXpath_NS_CI_NBSP("@type", "submit") + "]";
+		String submitValue = XpathUtils.attrXpath_NS_CI_NBSP("@value", textToSearch) + " and self::input[" + XpathUtils.attrXpath_NS_CI_NBSP("@type", "submit")
+				+ "]";
 
 		String title = XpathUtils.attrXpath_NS_CI_NBSP("@title", textToSearch);
 
@@ -313,8 +317,10 @@ public class TextFinder {
 
 			/*- Check if textEle have any textNode or child element */
 			/*- BUG (On Salesforce this line (finding element using other element) taking 2 sec). Dont know why. But on other sites working fine. */
-			boolean useTextXpath = FinderUtils.findElement(textEle, ".//*[self::text() or self::*]") == null ? false : true;
+//			boolean useTextXpath = FinderUtils.findElement(textEle, ".//*[self::text() or self::*]") == null ? false : true;
 
+			boolean useTextXpath = UtilsJS.hasChildTextNode(textEle);
+			
 			System.out.println("Find ActionEle (useTextNodeXpath) TIME : <" + (System.currentTimeMillis() - start) + ">");
 
 			String textNodeXpath = "";

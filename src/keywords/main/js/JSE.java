@@ -1,16 +1,25 @@
 package keywords.main.js;
 
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+
+import keywords.core.Driver;
 
 public class JSE {
 
 	static JavascriptExecutor jse;
 
-	public static JavascriptExecutor get(WebDriver driver) {
+	public static JavascriptExecutor getJSE() {
 		if (jse == null)
-			jse = (JavascriptExecutor)driver;
+			jse = (JavascriptExecutor) Driver.getDriver();
 		return jse;
+	}
+
+	public static Object executeScript(String script, Object... args) {
+		return getJSE().executeScript(script, args);
+	}
+
+	public static Object executeAsyncScript(String script, Object... args) {
+		return getJSE().executeAsyncScript(script, args);
 	}
 
 }

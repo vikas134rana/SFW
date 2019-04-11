@@ -32,7 +32,7 @@ public class DropdownTest {
 			System.out.println("FAIL : " + e.getMessage());
 		}
 
-		Dropdown.selectByTexts(multiDropdownEle, "a;Navigation Commands;WebElement Commands", "", true);
+		Dropdown.selectMultipleText(multiDropdownEle, "a;Navigation Commands;WebElement Commands", "", true);
 
 	}
 

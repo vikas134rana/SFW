@@ -15,20 +15,20 @@ public class ButtonJS implements AbstractButton {
 	@Override
 	public void clickButton(WebElement ele) {
 
-		JSE.get(Driver.getDriver()).executeScript(ActionScript.click(), ele);
+		JSE.getJSE().executeScript(ActionScript.click(), ele);
 	}
 
 	@Override
 	public Get getButtonText(WebElement ele) {
 
-		String buttonText = (String)JSE.get(Driver.getDriver()).executeScript(Script.textContent(), ele);
+		String buttonText = (String)JSE.getJSE().executeScript(Script.textContent(), ele);
 		return new Get(buttonText);
 	}
 
 	@Override
 	public Verify verifyButtonText(WebElement ele, String expectedText) {
 		
-		String buttonText = (String)JSE.get(Driver.getDriver()).executeScript(Script.textContent(), ele);
+		String buttonText = (String)JSE.getJSE().executeScript(Script.textContent(), ele);
 		
 		if (buttonText.equals(expectedText))
 			return new Verify(true, Message.VERIFIED);

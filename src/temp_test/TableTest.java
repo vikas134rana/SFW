@@ -3,7 +3,7 @@ package temp_test;
 import org.openqa.selenium.WebElement;
 
 import keywords.main.WebKW;
-import keywords.main.selenium.table_adapter.Table;
+import keywords.main.selenium.Table;
 import keywords.main.selenium.table_adapter.TableByQuery;
 import keywords.main.selenium.utils.FinderUtils;
 
@@ -62,40 +62,43 @@ public class TableTest {
 		// @formatter:off
 		
 		System.out.println("\n******** QUERY *******");
-		new TableByQuery().getCell(tableEle, "Country", "Company", "Island Trading", "", "", "Contact", "Helen Bennett", "", "", "", "");
+		new TableByQuery(tableEle).getCell( "Country", "Company", "Island Trading", "", "", "Contact", "Helen Bennett", "", "", "", "");
 		
 		System.out.println("\n******** (-ve WrongColumn) QUERY  *******");
-		try{new TableByQuery().getCell(tableEle, "Countr", "Company", "Island Trading", "", "", "Contact", "Helen Bennett", "", "", "", "");}catch (Throwable e) {
+		try{new TableByQuery(tableEle).getCell( "Countr", "Company", "Island Trading", "", "", "Contact", "Helen Bennett", "", "", "", "");}catch (Throwable e) {
 			System.out.println(e.getMessage());
 		};
 		
 		System.out.println("\n******** (-ve Wrong 1st pair colName) QUERY  *******");
-		try{new TableByQuery().getCell(tableEle, "Country", "Compan", "Island Trading", "", "", "Contact", "Helen Bennett", "", "", "", "");}catch (Throwable e) {
+		try{new TableByQuery(tableEle).getCell("Country", "Compan", "Island Trading", "", "", "Contact", "Helen Bennett", "", "", "", "");}catch (Throwable e) {
 			System.out.println(e.getMessage());
 		};
 		
 		System.out.println("\n******** (-ve Wrong 1st pair colValue) QUERY  *******");
-		try{new TableByQuery().getCell(tableEle, "Country", "Company", "Island Tradin", "", "", "Contact", "Helen Bennett", "", "", "", "");}catch (Throwable e) {
+		try{new TableByQuery(tableEle).getCell("Country", "Company", "Island Tradin", "", "", "Contact", "Helen Bennett", "", "", "", "");}catch (Throwable e) {
 			System.out.println(e.getMessage());
 		};
 		
 		System.out.println("\n******** (-ve Wrong AnyPair colName) QUERY  *******");
-		try{new TableByQuery().getCell(tableEle, "Country", "Compan", "Island Trading", "", "", "Contac", "Helen Bennett", "", "", "", "");}catch (Throwable e) {
+		try{new TableByQuery(tableEle).getCell("Country", "Compan", "Island Trading", "", "", "Contac", "Helen Bennett", "", "", "", "");}catch (Throwable e) {
 			System.out.println(e.getMessage());
 		};
 		
 		System.out.println("\n******** (-ve Wrong AnyPair colValue) QUERY  *******");
-		try{new TableByQuery().getCell(tableEle, "Country", "Company", "Island Tradin", "", "", "Contact", "Helen Bennet", "", "", "", "");}catch (Throwable e) {
+		try{new TableByQuery(tableEle).getCell("Country", "Company", "Island Tradin", "", "", "Contact", "Helen Bennet", "", "", "", "");}catch (Throwable e) {
 			System.out.println(e.getMessage());
 		};
 		
 		try{System.out.println("\n******** (-ve Different Rows (NoCommonRows)) QUERY  *******");}catch (Throwable e) {
 			System.out.println(e.getMessage());
 		};
-		try{new TableByQuery().getCell(tableEle, "Country", "Company", "Island Trading", "", "", "Contact", "Francisco Chang", "", "", "", "");}catch (Throwable e) {
+		try{new TableByQuery(tableEle).getCell( "Country", "Company", "Island Trading", "", "", "Contact", "Francisco Chang", "", "", "", "");}catch (Throwable e) {
 			System.out.println(e.getMessage());
 		};
 		
+		try{ WebElement cellEle = new TableByQuery(tableEle).getCell(2, "Country", "Company", "Island Trading", "", "", "Contact", "Francisco Chang", "", "", "", "");System.out.println("Text : "+cellEle.getText());}catch (Throwable e) {
+			System.out.println(e.getMessage());
+		};
 		// @formatter:on
 	}
 

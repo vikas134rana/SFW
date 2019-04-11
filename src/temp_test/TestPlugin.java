@@ -77,19 +77,19 @@ public class TestPlugin {
 		object.addXpaths(new WebObjectProperty("xpath:tag", "//div", true, false));
 		object.addXpaths(new WebObjectProperty("xpath:tag", "//input", true, false));
 		object.addXpaths(new WebObjectProperty("xpath", "//input[@name='firstname']", true, false));
-		WebKW.sendKeys(object, "vikas");
+		WebKW.type(object, "vikas");
 
 		// Get FirstName
 		object = new WebObject();
 		object.addXpaths(new WebObjectProperty("xpath:tag", "//input", true, false));
 		object.addXpaths(new WebObjectProperty("xpath:tag", "//div", true, false));
 		object.addXpaths(new WebObjectProperty("xpath", "//input[@name='firstname']", true, false));
-		System.out.println("FirstName : " + WebKW.getElementText(object).getOutput());
+		System.out.println("FirstName : " + WebKW.getText(object).getOutput());
 
 		// Type LastName
 		object = new WebObject();
 		object.addXpaths(new WebObjectProperty("xpath", "//input[@name='lastname']", true, false));
-		WebKW.sendKeys(object, "rana");
+		WebKW.type(object, "rana");
 
 		// Select Male
 		object = new WebObject();
@@ -104,7 +104,7 @@ public class TestPlugin {
 		// Get Link Text
 		object = new WebObject();
 		object.addXpaths(new WebObjectProperty("xpath", "//*[text()='Selenium Automation Hybrid Framework']", true, false));
-		System.out.println("Link Text : " + WebKW.getElementText(object).getOutput());
+		System.out.println("Link Text : " + WebKW.getText(object).getOutput());
 
 		// Click Link
 		object = new WebObject();

@@ -68,11 +68,11 @@ public class Dropdown {
 	 * @param ele
 	 * @return
 	 */
-	public static String getOptionsText(WebElement ele) {
+	public static String getOptionsText(WebElement ele, String delimiter) {
 
 		Select dropdown = new Select(ele);
 		List<String> dropdownOptionsTextList = EleCollectionUtils.getEleTextList(dropdown.getOptions());
-		return String.join(Utility.getDelimiter(), dropdownOptionsTextList);
+		return String.join(Utility.getDelimiter(delimiter), dropdownOptionsTextList);
 	}
 
 	/**
@@ -80,11 +80,11 @@ public class Dropdown {
 	 * @param ele
 	 * @return
 	 */
-	public static String getOptionsValue(WebElement ele) {
+	public static String getOptionsValue(WebElement ele, String delimiter) {
 
 		Select dropdown = new Select(ele);
 		List<String> dropdownOptionsTextList = EleCollectionUtils.getEleAttrList(dropdown.getOptions(), "value");
-		return String.join(Utility.getDelimiter(), dropdownOptionsTextList);
+		return String.join(Utility.getDelimiter(delimiter), dropdownOptionsTextList);
 	}
 
 	/*- =====================================  MULTIPLE_DROPWDON ============================================= */
@@ -160,7 +160,7 @@ public class Dropdown {
 	 * @param value
 	 * @return
 	 */
-	public static String getAllSelectedOptionsText(WebElement ele, String value) {
+	public static String getAllSelectedOptionsText(WebElement ele) {
 
 		Select dropdown = new Select(ele);
 		List<String> dropdownOptionsTextList = EleCollectionUtils.getEleTextList(dropdown.getAllSelectedOptions());
@@ -173,7 +173,7 @@ public class Dropdown {
 	 * @param value
 	 * @return
 	 */
-	public static String getAllSelectedOptionsValue(WebElement ele, String value) {
+	public static String getAllSelectedOptionsValue(WebElement ele) {
 
 		Select dropdown = new Select(ele);
 		List<String> dropdownOptionsValueList = EleCollectionUtils.getEleAttrList(dropdown.getAllSelectedOptions(), "value");
@@ -187,7 +187,7 @@ public class Dropdown {
 	 * @param delimiter
 	 * @param canContinue
 	 */
-	public static void selectByTexts(WebElement ele, String texts, String delimiter, boolean canContinue) {
+	public static String selectMultipleText(WebElement ele, String texts, String delimiter, boolean canContinue) {
 
 		Select dropdown = new Select(ele);
 		delimiter = Utility.getDelimiter(delimiter);
@@ -205,13 +205,14 @@ public class Dropdown {
 				if (canContinue)
 					notFoundTextList.add(text);
 				else
-					throw e;
+					throw new Error("No Dropdown Text<" + text + "> found");
 			}
 		}
 
-		if (!notFoundTextList.isEmpty()) {
-			throw new NoSuchElementException("Text/s : " + notFoundTextList.toString() + " not found");
-		}
+		if (!notFoundTextList.isEmpty()) 
+			return "Drodpwn Text/s : " + notFoundTextList.toString() + " not found";
+		else 
+			return "";
 	}
 
 }

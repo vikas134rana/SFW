@@ -45,7 +45,7 @@ public class AutoSwitchingWindowTest {
 		parentObject = new WebObject();
 		parentObject.setMetaTitle(new WebObjectProperty("Title", "Login | Salesforce", true, false));
 		object.setParentObject(parentObject, MetaType.HTML);
-		WebKW.sendKeys(object, "vikas");
+		WebKW.type(object, "vikas");
 		Utility.waitUntil(1000);
 
 		// Click TakeTheTour (Window 1)
@@ -68,7 +68,7 @@ public class AutoSwitchingWindowTest {
 		parentObject.setMetaTitle(new WebObjectProperty("Title",
 				"Interactive CRM Guided Tour from Salesforce.com - Customer Relationship Management Free Trial & Live Demo. - Salesforce.com", true, false));
 		object.setParentObject(parentObject, MetaType.HTML);
-		WebKW.sendKeys(object, "vikas");
+		WebKW.type(object, "vikas");
 		Utility.waitUntil(1000);
 
 		// Click TakeTheTour (Window 1) (FRAME AND WINDOW SWITCHING)
@@ -90,7 +90,7 @@ public class AutoSwitchingWindowTest {
 				"Interactive CRM Guided Tour from Salesforce.com - Customer Relationship Management Free Trial & Live Demo. - Salesforce.com", true, false));
 		parentObject.setMetaTitleIndex(new WebObjectProperty("TitleIndex", "1", true, false));
 		object.setParentObject(parentObject, MetaType.HTML);
-		WebKW.sendKeys(object, "vikas");
+		WebKW.type(object, "vikas");
 
 		/*- Click (Terms and Privacy Statement) (Window 3) - WINDOW TITLE UPDATED ON SAME HANDLE */
 		object = new WebObject();
