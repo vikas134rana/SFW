@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,6 +12,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import core.Data;
 import keywords.main.Utility;
 import keywords.main.selenium.utils.FinderUtils;
 import keywords.main.selenium.utils.XpathUtils;
@@ -125,21 +127,25 @@ public class TableAdapter {
 		Row rowObj = getRow(rowIndex);
 		return rowObj.getCells().stream().map(cell -> cell.getText()).collect(Collectors.toList());
 	}
-	
+
 	public List<String> getColumnTextList(int colIndex) {
 		return getColumn(colIndex).stream().map(cell -> cell.getText()).collect(Collectors.toList());
 	}
 
-	
 	public int getColumnIndex(String columnName) {
-		
+
 		List<String> columnHeaders = getRowTextList(0);
 		int colIndex = columnHeaders.indexOf(columnName);
-		
-		if(colIndex==-1)
-			throw new Error("ColumnName<"+columnName+"> not found");
-		
+
+		if (colIndex == -1)
+			throw new Error("ColumnName<" + columnName + "> not found");
+
 		return colIndex;
+	}
+
+	public int getColumnIndexUsingNameOrIndex(String columnNameOrIndex) {
+
+		return StringUtils.isNumeric(columnNameOrIndex) ? Data.getInt(columnNameOrIndex) : getColumnIndex(columnNameOrIndex);
 	}
 
 	static String tableHTML() {

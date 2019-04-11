@@ -8,10 +8,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
+
+import core.Data;
 
 public class TableByQuery {
 
+	private WebElement tableEle; // for future use
 	private TableAdapter tableAdapter;
 	private List<String> columnList = new ArrayList<>();
 	private List<String> valueList = new ArrayList<>();
@@ -22,14 +26,38 @@ public class TableByQuery {
 	private int rowIndex;
 	private int colIndex;
 
-	public WebElement getCell(WebElement tableEle, String colName, String column1, String value1, String column2, String value2, String column3, String value3,
+	public TableByQuery(WebElement tableEle) {
+		this.tableEle = tableEle;
+		tableAdapter = new TableAdapter(tableEle);
+	}
+
+	public WebElement getCell(int rowIndex, String colNameOrIndex, String column1, String value1, String column2, String value2, String column3, String value3,
 			String column4, String value4, String column5, String value5) {
 
-		tableAdapter = new TableAdapter(tableEle);
+		WebElement cellEle = null;
+
+		/*- if rowIndex is provided, don't use query to find rowIndex */
+		if (rowIndex > 0) {
+			this.rowIndex = rowIndex;
+			colIndex = tableAdapter.getColumnIndexUsingNameOrIndex(colNameOrIndex);
+			cellEle = tableAdapter.getCell(rowIndex, colIndex);
+		}
+		/*- if rowIndex is not provided, use query to find rowIndex */
+		else {
+			cellEle = getCell(colNameOrIndex, column1, value1, column2, value2, column3, value3, column4, value4, column5, value5);
+		}
+
+		return cellEle;
+
+	}
+
+	public WebElement getCell(String colNameOrIndex, String column1, String value1, String column2, String value2, String column3, String value3,
+			String column4, String value4, String column5, String value5) {
+
 		columnList = Arrays.asList(column1, column2, column3, column4, column5);
 		valueList = Arrays.asList(value1, value2, value3, value4, value5);
 
-		colIndex = tableAdapter.getColumnIndex(colName);
+		colIndex = tableAdapter.getColumnIndexUsingNameOrIndex(colNameOrIndex);
 
 		setColumnMap();
 		setColumnIndexList();
