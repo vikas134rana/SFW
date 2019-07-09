@@ -20,7 +20,8 @@ public class TextKeywords {
 
 		TextFinder textFinder = new TextFinder(textToSearch, index, isPartial, beforeText, afterText);
 		WebElement textEle = textFinder.findElement();
-		textEle.click();
+		WebElement actionEle = textFinder.actionEle(textEle, null, WebControls.SELF);
+		actionEle.click();
 	}
 
 	/**
@@ -117,8 +118,9 @@ public class TextKeywords {
 
 		TextFinder textFinder = new TextFinder(textToSearch, index, isPartial, beforeText, afterText);
 		WebElement textEle = textFinder.findElement();
-
-		SpecialActions.mouseHover(textEle);
+		WebElement actionEle = textFinder.actionEle(textEle, null, WebControls.SELF);
+		
+		SpecialActions.mouseHover(actionEle);
 	}
 
 	/*- =================================================================================================== */
@@ -131,7 +133,8 @@ public class TextKeywords {
 
 		TextFinder textFinder = new TextFinder(object);
 		WebElement textEle = textFinder.findElement();
-		textEle.click();
+		WebElement actionEle = textFinder.actionEle(textEle, null, WebControls.SELF);
+		actionEle.click();
 	}
 
 	/**
@@ -207,8 +210,9 @@ public class TextKeywords {
 
 		TextFinder textFinder = new TextFinder(object);
 		WebElement textEle = textFinder.findElement();
+		WebElement actionEle = textFinder.actionEle(textEle, null, WebControls.SELF);
 
-		SpecialActions.mouseHover(textEle);
+		SpecialActions.mouseHover(actionEle);
 	}
 
 }

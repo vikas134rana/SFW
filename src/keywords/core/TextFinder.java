@@ -70,8 +70,14 @@ public class TextFinder {
 		this.afterText = StringUtils.trim(afterTextProp.getValueIfUsable());
 	}
 
-	// find visible elements inside whole page (in all frame)
 	public WebElement findElement() {
+
+		WebElement ele = innerFindElement();
+		return ele;
+	}
+
+	// find visible elements inside whole page (in all frame)
+	private WebElement innerFindElement() {
 
 		long start = System.currentTimeMillis();
 
@@ -295,7 +301,17 @@ public class TextFinder {
 		return x;
 	}
 
-	public WebElement actionEle(WebElement textEle, boolean before, WebControls webControls) {
+	public WebElement actionEle(WebElement textEle, Boolean before, WebControls webControls) {
+
+		WebElement actionEle = innerActionEle(textEle, before, webControls);
+
+		Highlight.addHighlightEle(actionEle);
+		Highlight.highlightAll();
+
+		return actionEle;
+	}
+
+	private WebElement innerActionEle(WebElement textEle, Boolean before, WebControls webControls) {
 
 		/*- TODO : Handle Case where textToSearch is not actual text but it is attribute value like title, placeholder, submit etc */
 		/*- TODO : Handle Case where textToSearch is checkbox, dropdown */
@@ -309,7 +325,7 @@ public class TextFinder {
 
 		/*- if textEle is found using placeholder and keyword is Type then it is our action Ele
 		 *  Return this. no need to go further */
-		if (webControls == WebControls.TYPABLE && WebEleUtils.isTypable(textEle)) {
+		if (webControls == WebControls.SELF || (webControls == WebControls.TYPABLE && WebEleUtils.isTypable(textEle))) {
 			componentEle = textEle;
 		} else {
 
@@ -320,7 +336,7 @@ public class TextFinder {
 //			boolean useTextXpath = FinderUtils.findElement(textEle, ".//*[self::text() or self::*]") == null ? false : true;
 
 			boolean useTextXpath = UtilsJS.hasChildTextNode(textEle);
-			
+
 			System.out.println("Find ActionEle (useTextNodeXpath) TIME : <" + (System.currentTimeMillis() - start) + ">");
 
 			String textNodeXpath = "";

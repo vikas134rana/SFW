@@ -1,5 +1,8 @@
 package temp_test;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -9,40 +12,43 @@ import org.openqa.selenium.WebElement;
 import core.TextObject;
 import core.WebObjectProperty;
 import keywords.core.Driver;
+import keywords.main.FullWebKW;
 import keywords.main.Utility;
 import keywords.main.WebKW;
 import keywords.main.selenium.TextKeywords;
 import keywords.main.selenium.utils.FinderUtils;
-import keywords.main.selenium.utils.XpathUtils;
 
 public class ByTextTest {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
+
+		PrintStream out = new PrintStream(new FileOutputStream("C:\\Users\\Vikas\\Desktop\\output.txt"));
+		System.setOut(out);
 
 		salesforceByText();
 	}
 
 	static void byTextUsingObject() {
 
-		WebKW.openBrowser("chrome", "http://www.asuspromo.in/");
+		FullWebKW.openBrowser("chrome", "http://www.asuspromo.in/");
 
 		TextObject object = new TextObject();
 		object.setTextToSearch(new WebObjectProperty("texttosearch", "REGISTER"));
-		WebKW.clickByText(object);
+		FullWebKW.clickByText(object);
 
 		Utility.waitUntil(1000);
 
 		object = new TextObject();
 		object.setTextToSearch(new WebObjectProperty("texttosearch", "STATE "));
-		WebKW.selectDropdownByText(object, false, "Delhi");
+		FullWebKW.selectDropdownByText(object, false, "Delhi");
 
 		object = new TextObject();
 		object.setTextToSearch(new WebObjectProperty("texttosearch", "MODEL NO"));
-		WebKW.typeByText(object, false, "X510UF-EJ592T");
+		FullWebKW.typeByText(object, false, "X510UF-EJ592T");
 
 		object = new TextObject();
 		object.setTextToSearch(new WebObjectProperty("texttosearch", "SERIAL NUMBER"));
-		WebKW.typeByText(object, false, "JAN0CX01C40941B");
+		FullWebKW.typeByText(object, false, "JAN0CX01C40941B");
 	}
 
 	static void faltuTest() {
@@ -178,61 +184,61 @@ public class ByTextTest {
 		Driver.getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
 		/*- Login Credentials */
-		TextKeywords.typeByText("Username", 0, false, null, null, false, "srikant@xyz.com");
-		TextKeywords.typeByText("Password", 0, false, null, null, false, "Crestech7");
-		TextKeywords.clickByText("Log In", 0, false, null, null);
+		FullWebKW.typeByText(new TextObject("Username", 0, false, null, null), false, "srikant@xyz.com");
+		FullWebKW.typeByText(new TextObject("Password", 0, false, null, null), false, "Crestech7");
+		FullWebKW.clickByText(new TextObject("Log In", 0, false, null, null));
 
 		Utility.waitUntil(10000);
 
-		TextKeywords.clickByText("Close", 0, false, null, null);
-		TextKeywords.clickByText("New", 0, false, null, null);
+		FullWebKW.clickByText(new TextObject("Close", 0, false, null, null));
+		FullWebKW.clickByText(new TextObject("New", 0, false, null, null));
 		Utility.waitUntil(2000);
-		TextKeywords.clickByText("Continue", 0, false, null, null);
+		FullWebKW.clickByText(new TextObject("Continue", 0, false, null, null));
 
 		/*- Account Information */
 
-		TextKeywords.typeByText("Account Name", 0, false, null, null, false, "john");
-		TextKeywords.typeByText("Parent Account", 0, false, null, null, false, "john parent");
-		TextKeywords.typeByText("Account Number	", 0, false, null, null, false, "101");
-		TextKeywords.typeByText("Account Site", 0, false, null, null, false, "john@wwe.com");
-		TextKeywords.selectDropdownByText("Type", 0, false, "", "", false, "Customer - Channel");
-		TextKeywords.selectDropdownByText("Industry", 0, false, "", "", false, "Banking");
-		TextKeywords.typeByText("Annual Revenue", 0, false, null, null, false, "90000000");
-		TextKeywords.selectDropdownByText("Rating", 0, false, "", "", false, "Warm");
-		TextKeywords.typeByText("Phone", 0, false, null, null, false, "9876543210");
-		TextKeywords.typeByText("Fax", 0, false, null, null, false, "0123456789");
-		TextKeywords.typeByText("Website", 0, false, null, null, false, "wwe.com");
-		TextKeywords.typeByText("Ticker Symbol", 0, false, null, null, false, "u cant see me");
-		TextKeywords.selectDropdownByText("Ownership", 0, false, "", "", false, "Private");
-		TextKeywords.typeByText("Employees", 0, false, null, null, false, "999");
-		TextKeywords.typeByText("SIC Code", 0, false, null, null, false, "7639");
+		FullWebKW.typeByText(new TextObject("Account Name", 0, false, null, null), false, "john");
+		FullWebKW.typeByText(new TextObject("Parent Account", 0, false, null, null), false, "john parent");
+		FullWebKW.typeByText(new TextObject("Account Number	", 0, false, null, null), false, "101");
+		FullWebKW.typeByText(new TextObject("Account Site", 0, false, null, null), false, "john@wwe.com");
+		FullWebKW.selectDropdownByText(new TextObject("Type", 0, false, "", ""), false, "Customer - Channel");
+		FullWebKW.selectDropdownByText(new TextObject("Industry", 0, false, "", ""), false, "Banking");
+		FullWebKW.typeByText(new TextObject("Annual Revenue", 0, false, null, null), false, "90000000");
+		FullWebKW.selectDropdownByText(new TextObject("Rating", 0, false, "", ""), false, "Warm");
+		FullWebKW.typeByText(new TextObject("Phone", 0, false, null, null), false, "9876543210");
+		FullWebKW.typeByText(new TextObject("Fax", 0, false, null, null), false, "0123456789");
+		FullWebKW.typeByText(new TextObject("Website", 0, false, null, null), false, "wwe.com");
+		FullWebKW.typeByText(new TextObject("Ticker Symbol", 0, false, null, null), false, "u cant see me");
+		FullWebKW.selectDropdownByText(new TextObject("Ownership", 0, false, "", ""), false, "Private");
+		FullWebKW.typeByText(new TextObject("Employees", 0, false, null, null), false, "999");
+		FullWebKW.typeByText(new TextObject("SIC Code", 0, false, null, null), false, "7639");
 
 		/*- Address Information */
 
-		TextKeywords.typeByText("Billing Street", 0, false, null, null, false, "Gali no 4");
-		TextKeywords.typeByText("Billing City", 0, false, null, null, false, "Noida");
-		TextKeywords.typeByText("Billing State/Province", 0, false, null, null, false, "UP");
-		TextKeywords.typeByText("Billing Zip/Postal Code", 0, false, null, null, false, "240108");
-		TextKeywords.typeByText("Billing Country", 0, false, null, null, false, "Nepal");
-		TextKeywords.typeByText("Shipping Street", 0, false, null, null, false, "MG road");
-		TextKeywords.typeByText("Shipping City", 0, false, null, null, false, "Bangaluru");
-		TextKeywords.typeByText("Shipping State/Province", 0, false, null, null, false, "Kar-natak");
-		TextKeywords.typeByText("Shipping Zip/Postal Code", 0, false, null, null, false, "239007");
-		TextKeywords.typeByText("Shipping Country", 0, false, null, null, false, "Bhutan");
+		FullWebKW.typeByText(new TextObject("Billing Street", 0, false, null, null), false, "Gali no 4");
+		FullWebKW.typeByText(new TextObject("Billing City", 0, false, null, null), false, "Noida");
+		FullWebKW.typeByText(new TextObject("Billing State/Province", 0, false, null, null), false, "UP");
+		FullWebKW.typeByText(new TextObject("Billing Zip/Postal Code", 0, false, null, null), false, "240108");
+		FullWebKW.typeByText(new TextObject("Billing Country", 0, false, null, null), false, "Nepal");
+		FullWebKW.typeByText(new TextObject("Shipping Street", 0, false, null, null), false, "MG road");
+		FullWebKW.typeByText(new TextObject("Shipping City", 0, false, null, null), false, "Bangaluru");
+		FullWebKW.typeByText(new TextObject("Shipping State/Province", 0, false, null, null), false, "Kar-natak");
+		FullWebKW.typeByText(new TextObject("Shipping Zip/Postal Code", 0, false, null, null), false, "239007");
+		FullWebKW.typeByText(new TextObject("Shipping Country", 0, false, null, null), false, "Bhutan");
 
 		/*- Additional Information */
 
-		TextKeywords.selectDropdownByText("Customer Priority", 0, false, "", "", false, "High");
-		TextKeywords.typeByText("SLA Expiration Date", 0, false, null, null, false, "12/21/2018");
-		TextKeywords.typeByText("Number of Locations", 0, false, null, null, false, "5");
-		TextKeywords.selectDropdownByText("Active", 0, false, "", "", false, "No");
-		TextKeywords.selectDropdownByText("SLA", 0, false, "", "", false, "Platinum");
-		TextKeywords.typeByText("SLA Serial Number", 0, false, null, null, false, "57687");
-		TextKeywords.selectDropdownByText("Upsell Opportunity	", 0, false, "", "", false, "Maybe");
+		FullWebKW.selectDropdownByText(new TextObject("Customer Priority", 0, false, "", ""), false, "High");
+		FullWebKW.typeByText(new TextObject("SLA Expiration Date", 0, false, null, null), false, "12/21/2018");
+		FullWebKW.typeByText(new TextObject("Number of Locations", 0, false, null, null), false, "5");
+		FullWebKW.selectDropdownByText(new TextObject("Active", 0, false, "", ""), false, "No");
+		FullWebKW.selectDropdownByText(new TextObject("SLA", 0, false, "", ""), false, "Platinum");
+		FullWebKW.typeByText(new TextObject("SLA Serial Number", 0, false, null, null), false, "57687");
+		FullWebKW.selectDropdownByText(new TextObject("Upsell Opportunity	", 0, false, "", ""), false, "Maybe");
 
 		/*- Description Information */
 
-		TextKeywords.typeByText("Description Information", 0, false, null, null, false, "Best Wrestler bhidu.");
+		FullWebKW.typeByText(new TextObject("Description Information", 0, false, null, null), false, "Best Wrestler bhidu.");
 	}
 
 }

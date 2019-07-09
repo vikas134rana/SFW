@@ -184,7 +184,7 @@ public class WebKW {
 		return KeywordRB.PASS().setOutput(true).setMessage(Message.DONE.toString()).build();
 	}
 
-	public static Keyword selectDropdwonMultipleText(WebObject object, String texts, String delimiter, boolean canContinue) {
+	public static Keyword selectDropdownMultipleText(WebObject object, String texts, String delimiter, boolean canContinue) {
 
 		WebElement dropdownEle = Finder.findElement(object);
 		String msg = Dropdown.selectMultipleText(dropdownEle, texts, delimiter, canContinue);

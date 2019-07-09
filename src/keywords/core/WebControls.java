@@ -2,6 +2,6 @@ package keywords.core;
 
 public enum WebControls {
 
-	TYPABLE, DROPDOWN, CHECKBOX, RADIO;
+	TYPABLE, DROPDOWN, CHECKBOX, RADIO, SELF;
 
 }

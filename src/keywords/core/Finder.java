@@ -8,10 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import com.google.common.collect.ImmutableMap;
 
 import core.WebObject;
 import core.WebObjectProperty;
@@ -23,6 +20,17 @@ public class Finder {
 	private static List<WebElement> tempElementsInBucket = new ArrayList<>();
 
 	public static WebElement findElement(WebObject object) {
+
+		WebElement ele = innerFindElement(object);
+		
+		Highlight.addHighlightEle(ele);
+		Highlight.highlightAll();
+		
+		return ele;
+		
+	}
+
+	public static WebElement innerFindElement(WebObject object) {
 
 		System.out.println("\n ===================================================================================");
 

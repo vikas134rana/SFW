@@ -8,6 +8,19 @@ public class TextObject extends WebObject {
 	private WebObjectProperty beforeText = new WebObjectProperty();
 	private WebObjectProperty afterText = new WebObjectProperty();
 
+	public TextObject() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public TextObject(String textToSearch, int index, boolean partial, String beforeText, String afterText) {
+
+		this.textToSearch = new WebObjectProperty("textToSearch", textToSearch);
+		this.index = new WebObjectProperty("index", String.valueOf(index));
+		this.partial = new WebObjectProperty("partial", String.valueOf(partial));
+		this.beforeText = new WebObjectProperty("beforeText", beforeText);
+		this.afterText = new WebObjectProperty("afterText", afterText);
+	}
+
 	public WebObjectProperty getTextToSearch() {
 		return textToSearch;
 	}
